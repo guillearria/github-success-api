@@ -1,6 +1,10 @@
 FROM python:3.8-slim-buster
-ADD requirements.txt /src/requirements.txt
-RUN cd /src; pip install -r requirements.txt
-ADD . /src
+
+ADD requirements.txt /app/
+WORKDIR /app
+
+RUN pip install -r requirements.txt
+ADD . /app
 EXPOSE  5000
-CMD ["python", "/src/app.py"]
+
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
