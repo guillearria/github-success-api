@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restful import reqparse, abort, Api, Resource
 import db
+from github import Github
 
 app = Flask(__name__)
 api = Api(app)
@@ -25,7 +26,22 @@ class Refresh(Resource):
         g = Github("9e338f1b517471deb0668bdda7b3b3c8ac7a3656")
         repos = [g.get_repo(repo) for repo in li]
         pulls_paginatedLists = dict((repo.name, repo.get_pulls(state="all")) for repo in repos)
-        return pulls_paginatedLists
+
+        limit = date.today() - timedelta(3)
+        repo_names = list(pulls_paginatedLists.keys())
+        pulls_pls_3day = dict((name,[]) for name in repo_names)
+
+        for repo in repo_names:
+            for pull in pulls_paginatedLists[repo]:
+                pull_date = pull.created_at.date()
+                if pull_date == date.today():
+                    continue
+                elif pull_date >= limit:
+                    pulls_pls_3day[repo].append(pull)
+                else: 
+                    break
+
+        return pulls_pls_3day
 
 api.add_resource(Refresh, '/api/refresh')
 
