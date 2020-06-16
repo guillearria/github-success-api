@@ -44,4 +44,4 @@ class Pull(BaseModel):
 
 # Connection and table creation
 db.connect()
-db.create_tables([Repo, Relationship, Pull])
+db.create_tables([Repo, Pull])
