@@ -1,4 +1,4 @@
-# gh-analysis-db
+# gh-analysis
 
 Built using:
 PyGitHub + Python + Flask + Flask-Restful + Postgres + AWS 
