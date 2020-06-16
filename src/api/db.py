@@ -17,30 +17,24 @@ class BaseModel(Model):
 class Repo(BaseModel):
     name = CharField()
 
-    # def serialize(self):
-    #     data = {
-    #         'id': self.id,
-    #         'name': self.name,
-    #     }
-
-    #     return data
+    def serialize(self):
+        repo_dict = model_to_dict(self)
+        return repo_dict
 
 class Pull(BaseModel):
     repo = ForeignKeyField(Repo, backref='pulls')
-    created = DateTimeField()
+    created_date = DateTimeField()
     is_merged = BooleanField()
     additions = IntegerField()
     deletions = IntegerField()
 
-    # def serialize(self):
-    #     data = {
-    #         'id': self.id,
-    #         'is_merged': self.is_merged,
-    #         'additions': int(self.additions),
-    #         'deletions': int(self.deletions),
-    #     }
+    def serialize(self):
+        pull_dict = model_to_dict(self)
+        pull_dict["created_date"] = (
+            pull_dict["created_date"].strftime('%Y-%m-%d')
+        )
 
-    #     return data
+        return pull_dict
 
 # Connection and table creation
 db.connect()
