@@ -11,6 +11,18 @@ Routes:
 * .....
 
 ## Notes:
+Steps to reproduce:
+* file structure (dash/ui, flask/api, postgres/db)
+* create necessary application scripts
+* create config.py script for db
+* pin required dependencies to requirement.txt files (pipenv + pip-tools?)
+* Compose necessary Dockerfiles (creates custom images)
+* create docker-compose.yml (runs of multiple containers)
+
+Docker cmds:
+* All images: docker images
+* All containers: docker container ls -la
+
 Docker Installation https://docs.docker.com/engine/install/ubuntu/
 
 Ubuntu Docker Permissions Error: https://stackoverflow.com/questions/47854463/docker-got-permission-denied-while-trying-to-connect-to-the-docker-daemon-socke
