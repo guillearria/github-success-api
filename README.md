@@ -15,9 +15,9 @@ Steps to reproduce:
 * file structure (dash/ui, flask/api, postgres/db)
 * create necessary application scripts
 * create config.py script for db
-* pin required dependencies to requirement.txt files (pipenv + pip-tools?)
+* pin required dependencies to requirement.txt files (pip-tools using requirements.in)
 * Compose necessary Dockerfiles (creates custom images)
-* create docker-compose.yml (runs of multiple containers)
+* create docker-compose.yml (runs of multiple containers, ie.container instructions)
 
 Docker cmds:
 * All images: docker images

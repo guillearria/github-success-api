@@ -8,4 +8,4 @@ ADD . /app
 
 EXPOSE  8050
 
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]
+CMD ["python", "-b", "0.0.0.0:5000", "app:app"]
