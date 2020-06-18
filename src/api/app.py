@@ -25,7 +25,7 @@ parser.add_argument('task')
 
 
 class Refresh(Resource):
-    def put(self):
+    def post(self):
         g = Github("9e338f1b517471deb0668bdda7b3b3c8ac7a3656")
         repos = [g.get_repo(repo) for repo in temp_repos]
         pulls_paginatedLists = dict(
@@ -63,6 +63,8 @@ class Refresh(Resource):
 
         columns = list(pulls_data.keys())
         df = pd.DataFrame(pulls_data, columns=columns)
+
+        return "DB Refreshed", 201
 
 api.add_resource(Refresh, '/api/refresh')
 
