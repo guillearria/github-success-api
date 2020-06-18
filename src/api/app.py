@@ -46,6 +46,10 @@ class Refresh(Resource):
                     break
 
         repo_data = [{"name": name} for name in repo_names]
+
+        with db.db.atomic():
+            db.Repo.insert_many(repo_data).execute()
+
         pulls_data = []
 
         for repo in repo_names:
@@ -59,7 +63,6 @@ class Refresh(Resource):
                                    })
 
         with db.db.atomic():
-            db.Repo.insert_many(repo_data).execute()
             db.Pull.insert_many(pulls_data).execute()
 
         return "DB Refreshed", 201
