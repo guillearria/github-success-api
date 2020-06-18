@@ -45,7 +45,7 @@ class Refresh(Resource):
                 else:
                     break
 
-        repo_data = [{"name": name}for name in repo_names]
+        repo_data = [{"name": name} for name in repo_names]
         pulls_data = []
 
         for repo in repo_names:
@@ -69,9 +69,18 @@ class Refresh(Resource):
 class RepoList(Resource):
     def get(self):
         query = db.Repo.select()
-        return [repo.name for repo in query]
+        return [repo.name for repo in query], 200
+
+# PullList
+# shows a list of all pulls for given repo
+class PullList(Resource):
+    def get(self, repo_name):
+        query = db.Pull.select().join(db.Repo).where(db.Repo.name == repo_name)
+        return [[pull.repo_id, pull.created_date] for pull in query], 200
 
 api.add_resource(Refresh, '/api/refresh')
+api.add_resource()
+api.add_resource()
 
 if __name__ == '__main__':
     # DISABLE DEBUG FOR PRODUCTION
