@@ -26,6 +26,9 @@ temp_repos = ["kubernetes/kubernetes", "apache/spark"]
 
 class Refresh(Resource):
     def post(self):
+        db.Repo.delete().execute()
+        db.Pull.delete().execute()
+
         g = Github("d38d9579d63a4781c295fc499497f5d65714c2ed")
         repos = [g.get_repo(repo) for repo in temp_repos]
         pulls_paginatedLists = dict(
@@ -72,7 +75,7 @@ class Refresh(Resource):
 class RepoList(Resource):
     def get(self):
         query = db.Repo.select()
-        return [repo.name for repo in query], 200
+        return [[repo.id, repo.name] for repo in query], 200
 
 # PullList
 # shows a list of all pulls for given repo
