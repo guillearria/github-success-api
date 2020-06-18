@@ -22,7 +22,7 @@ class Repo(BaseModel):
         return repo_dict
 
 class Pull(BaseModel):
-    repo = ForeignKeyField(Repo, backref='pulls')
+    repo_id = ForeignKeyField(Repo, backref='pulls')
     created_date = DateTimeField()
     is_merged = BooleanField()
     additions = IntegerField()

@@ -1,8 +1,8 @@
 from flask import Flask
 from flask_restful import reqparse, abort, Api, Resource
-import db
 from github import Github
 from datetime import date, timedelta
+import db
 
 app = Flask(__name__)
 api = Api(app)
@@ -17,8 +17,8 @@ temp_repos = ["kubernetes/kubernetes", "apache/spark"]
 #              "nodejs/node", "tensorflow/tensorflow", "freeCodeCamp/freeCodeCamp",
 #              "apple/swift", "rust-lang/rust", "openshift/origin", "ansible/ansible"]
 
-parser = reqparse.RequestParser()
-parser.add_argument('task')
+# parser = reqparse.RequestParser()
+# parser.add_argument('task')
 
 # Refresh:
 # Clears DB and saves last 3 days of data for given repos
@@ -45,26 +45,25 @@ class Refresh(Resource):
                 else:
                     break
 
-        pulls_data = {
-            "repo_name": [],
-            "created_date": [],
-            "is_merged": [],
-            "additions": [],
-            "deletions": [],
-        }
+        repo_data = [{"name": name}for name in repo_names]
+        pulls_data = []
 
         for repo in repo_names:
             pulls = pulls_pls_3day[repo]
-            pulls_data["repo_name"].extend([repo for pull in pulls])
-            pulls_data["created_date"].extend([pull.created_at.date() for pull in pulls])
-            pulls_data["is_merged"].extend([pull.merged for pull in pulls])
-            pulls_data["additions"].extend([pull.additions for pull in pulls])
-            pulls_data["deletions"].extend([pull.deletions for pull in pulls])
+            for pull in pulls:
+                pulls_data.append({"repo_id": db.Repo.get(db.Repo.name == repo),
+                                   "created_date": pull.created_at.date(),
+                                   "is_merged": pull.merged,
+                                   "additions": pull.additions,
+                                   "deletions": pull.deletions
+                                   })
 
-        columns = list(pulls_data.keys())
-        df = pd.DataFrame(pulls_data, columns=columns)
+        with db.db.atomic():
+            db.Repo.insert_many(repo_data).execute()
+            db.Pull.insert_many(pulls_data).execute()
 
         return "DB Refreshed", 201
+
 
 api.add_resource(Refresh, '/api/refresh')
 
