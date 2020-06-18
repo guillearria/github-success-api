@@ -20,17 +20,20 @@ temp_repos = ["kubernetes/kubernetes", "apache/spark"]
 parser = reqparse.RequestParser()
 parser.add_argument('task')
 
-# Refresh: 
+# Refresh:
 # Clears DB and saves last 3 days of data for given repos
+
+
 class Refresh(Resource):
     def put(self):
         g = Github("9e338f1b517471deb0668bdda7b3b3c8ac7a3656")
-        repos = [g.get_repo(repo) for repo in li]
-        pulls_paginatedLists = dict((repo.name, repo.get_pulls(state="all")) for repo in repos)
+        repos = [g.get_repo(repo) for repo in temp_repos]
+        pulls_paginatedLists = dict(
+            (repo.name, repo.get_pulls(state="all")) for repo in repos)
 
         limit = date.today() - timedelta(3)
         repo_names = list(pulls_paginatedLists.keys())
-        pulls_pls_3day = dict((name,[]) for name in repo_names)
+        pulls_pls_3day = dict((name, []) for name in repo_names)
 
         for repo in repo_names:
             for pull in pulls_paginatedLists[repo]:
@@ -39,10 +42,27 @@ class Refresh(Resource):
                     continue
                 elif pull_date >= limit:
                     pulls_pls_3day[repo].append(pull)
-                else: 
+                else:
                     break
 
-        return pulls_pls_3day
+        pulls_data = {
+            "repo_name": [],
+            "created_date": [],
+            "is_merged": [],
+            "additions": [],
+            "deletions": [],
+        }
+
+        for repo in repo_names:
+            pulls = pulls_pls_3day[repo]
+            pulls_data["repo_name"].extend([repo for pull in pulls])
+            pulls_data["created_date"].extend([pull.created_at.date() for pull in pulls])
+            pulls_data["is_merged"].extend([pull.merged for pull in pulls])
+            pulls_data["additions"].extend([pull.additions for pull in pulls])
+            pulls_data["deletions"].extend([pull.deletions for pull in pulls])
+
+        columns = list(pulls_data.keys())
+        df = pd.DataFrame(pulls_data, columns=columns)
 
 api.add_resource(Refresh, '/api/refresh')
 
