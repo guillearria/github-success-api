@@ -15,7 +15,7 @@ class BaseModel(Model):
 
 # Table Description
 class Repo(BaseModel):
-    name = CharField()
+    name = CharField(255)
 
     def serialize(self):
         repo_dict = model_to_dict(self)

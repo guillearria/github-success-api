@@ -17,13 +17,8 @@ temp_repos = ["kubernetes/kubernetes", "apache/spark"]
 #              "nodejs/node", "tensorflow/tensorflow", "freeCodeCamp/freeCodeCamp",
 #              "apple/swift", "rust-lang/rust", "openshift/origin", "ansible/ansible"]
 
-# parser = reqparse.RequestParser()
-# parser.add_argument('task')
-
 # Refresh:
 # Clears DB and saves last 3 days of data for given repos
-
-
 class Refresh(Resource):
     def post(self):
         db.Repo.delete().execute()
@@ -68,25 +63,33 @@ class Refresh(Resource):
         with db.db.atomic():
             db.Pull.insert_many(pulls_data).execute()
 
-        return "DB Refreshed", 201
+        return {"message": "DB Refreshed"}, 201
 
 # RepoList
 # shows a list of all repos
 class RepoList(Resource):
     def get(self):
-        query = db.Repo.select()
-        return [[repo.id, repo.name] for repo in query], 200
+        query = db.Repo.select().dicts()
+        return [row for row in query], 200
 
-# PullList
-# shows a list of all pulls for given repo
+ # PullList
+# shows a list of all pulls
 class PullList(Resource):
+    def get(self):
+        query = db.Pull.select().dicts()
+        return [row for row in query], 200
+
+# PullListByRepo
+# shows a list of all pulls for given repo
+class PullListByRepo(Resource):
     def get(self, repo_name):
         query = db.Pull.select().join(db.Repo).where(db.Repo.name == repo_name)
         return [[pull.repo_id, pull.created_date] for pull in query], 200
 
 api.add_resource(Refresh, '/api/refresh')
-api.add_resource(RepoList, '/api/repo/all')
-api.add_resource(PullList, '/api/pull/<repo_name>')
+api.add_resource(RepoList, '/api/repo/')
+api.add_resource(PullList, '/api/pull/')
+api.add_resource(PullListByRepo, '/api/pull/<repo_name>')
 
 if __name__ == '__main__':
     # DISABLE DEBUG FOR PRODUCTION
