@@ -1,8 +1,9 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_restful import reqparse, abort, Api, Resource
 from github import Github
 from datetime import date, timedelta
 import db
+from playhouse.shortcuts import model_to_dict
 
 app = Flask(__name__)
 api = Api(app)
@@ -76,15 +77,15 @@ class RepoList(Resource):
 # shows a list of all pulls
 class PullList(Resource):
     def get(self):
-        query = db.Pull.select().dicts()
-        return [row for row in query], 200
+        query = db.Pull.select()
+        return jsonify([r.serialize() for r in query])
 
 # PullListByRepo
 # shows a list of all pulls for given repo
 class PullListByRepo(Resource):
     def get(self, repo_name):
         query = db.Pull.select().join(db.Repo).where(db.Repo.name == repo_name)
-        return [[pull.repo_id, pull.created_date] for pull in query], 200
+        return jsonify([r.serialize() for r in query])
 
 api.add_resource(Refresh, '/api/refresh')
 api.add_resource(RepoList, '/api/repo/')
