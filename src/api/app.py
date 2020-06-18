@@ -64,6 +64,12 @@ class Refresh(Resource):
 
         return "DB Refreshed", 201
 
+# RepoList
+# shows a list of all repos
+class RepoList(Resource):
+    def get(self):
+        query = db.Repo.select()
+        return [repo.name for repo in query]
 
 api.add_resource(Refresh, '/api/refresh')
 
