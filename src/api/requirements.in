@@ -3,3 +3,4 @@ flask_restful
 PyGithub
 peewee
 gunicorn
+psycopg2-binary

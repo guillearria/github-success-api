@@ -17,6 +17,7 @@ itsdangerous==1.1.0       # via flask
 jinja2==2.11.2            # via flask
 markupsafe==1.1.1         # via jinja2
 peewee==3.13.3            # via -r requirements.in
+psycopg2-binary==2.8.5    # via -r requirements.in
 pygithub==1.51            # via -r requirements.in
 pyjwt==1.7.1              # via pygithub
 pytz==2020.1              # via flask-restful
