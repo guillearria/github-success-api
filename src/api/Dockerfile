@@ -7,7 +7,7 @@ FROM python:3.8-slim-buster
 WORKDIR /app
 
 # Install dependencies
-ADD requirements.txt /app/
+COPY requirements.txt /app/
 RUN pip install -r requirements.txt
 
 # Copy project
