@@ -1,5 +1,6 @@
 import config
 from peewee import *
+from playhouse.shortcuts import model_to_dict
 
 db = PostgresqlDatabase(
     config.POSTGRES_DB,
