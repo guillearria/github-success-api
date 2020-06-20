@@ -3,11 +3,11 @@ from peewee import *
 from playhouse.shortcuts import model_to_dict
 
 db = PostgresqlDatabase(
-    config.POSTGRES_DB,
-    user=config.POSTGRES_USER, 
-    password=config.POSTGRES_PASSWORD,
-    host=config.POSTGRES_HOST, 
-    port=config.POSTGRES_PORT
+    os.getenv("DATABASE"),
+    user=os.getenv("POSTGRES_USER"), 
+    password=os.getenv("POSTGRES_PASSWORD"),
+    host=os.getenv("POSTGRES_HOST"), 
+    port=os.getenv("POSTGRES_PORT")
 )
 
 class BaseModel(Model):
