@@ -36,7 +36,3 @@ class Pull(BaseModel):
         )
 
         return pull_dict
-
-# Connection and table creation
-db.connect()
-db.create_tables([Repo, Pull])
