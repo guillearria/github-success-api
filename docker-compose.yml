@@ -1,13 +1,14 @@
 version: '3.8'
+
 services:
   db:
-    image: postgres
+    image: postgres:12-alpine
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=gh_analysis
+      - POSTGRES_PASSWORD=gh_analysis
+      - POSTGRES_DB=gh_analysis_dev
     volumes:
-      - ~/pgdata:/var/lib/postgresql/data
+      - /pgdata:/var/lib/postgresql/data
     restart: always
   api:
     build: ./services/api
