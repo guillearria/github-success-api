@@ -1,5 +1,7 @@
 import os
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+
 ENVIRONMENT = os.environ.get("ENVIRONMENT", "dev")
 DEBUG = ENVIRONMENT == "dev"
 HOST = '0.0.0.0' if ENVIRONMENT == "prod" else 'localhost'
