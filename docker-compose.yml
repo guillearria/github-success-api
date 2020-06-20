@@ -11,15 +11,13 @@ services:
     restart: always
   api:
     build: ./services/api
+    command: gunicorn --timeout 1200 -b 0.0.0.0:5000 app:manage
+    volumes:
+      - ./services/api/:/usr/src/app/
     ports:
       - "5000:5000"
-    environment:
-      - ENVIRONMENT=prod
-      - POSTGRES_HOST=db
-      - POSTGRES_PORT=5432
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+    env_file:
+      - ./.env.dev
     depends_on:
       - db
     restart: always
