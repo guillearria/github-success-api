@@ -3,7 +3,6 @@ from flask_restful import reqparse, abort, Api, Resource
 from github import Github
 from datetime import date, timedelta
 import db
-from playhouse.shortcuts import model_to_dict
 
 app = Flask(__name__)
 api = Api(app)
