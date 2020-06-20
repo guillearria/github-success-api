@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# verify that Postgres is up and healthy before creating the database table and running the Flask development server
+
 if [ "$DATABASE" = "postgres" ]
 then
     echo "Waiting for postgres..."
