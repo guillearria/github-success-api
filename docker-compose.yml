@@ -10,9 +10,7 @@ services:
       - ~/pgdata:/var/lib/postgresql/data
     restart: always
   api:
-    build:
-      context: src/api
-      dockerfile: Dockerfile
+    build: ./services/api
     ports:
       - "5000:5000"
     environment:
