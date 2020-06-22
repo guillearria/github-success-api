@@ -19,11 +19,11 @@ ENV PYTHONUNBUFFERED 1
 RUN apt-get update && \
     apt-get install -y --no-install-recommends gcc
 
-# lint
-RUN pip install --upgrade pip
-RUN pip install flake8
-COPY . /usr/src/app/
-RUN flake8 --ignore=E501,F401 .
+# # lint
+# RUN pip install --upgrade pip
+# RUN pip install flake8
+# COPY . /usr/src/app/
+# RUN flake8 --ignore=E501,F401 .
 
 # install python dependencies
 COPY ./requirements.txt .
@@ -40,7 +40,7 @@ FROM python:3.8.1-slim-buster
 RUN mkdir -p /home/app
 
 # create the app user
-RUN addgroup -S app && adduser -S app -G app
+RUN addgroup --system app && adduser --system app --ingroup app
 
 # create the appropriate directories
 ENV HOME=/home/app
