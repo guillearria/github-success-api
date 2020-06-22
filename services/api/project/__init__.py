@@ -7,6 +7,36 @@ import db
 app = Flask(__name__)
 api = Api(app)
 
+# RepoList
+# shows a list of all repos
+class RepoList(Resource):
+    def get(self):
+        query = db.Repo.select().dicts()
+        return [row for row in query], 200
+
+ # PullList
+# shows a list of all pulls
+class PullList(Resource):
+    def get(self):
+        query = db.Pull.select()
+        return jsonify([r.serialize() for r in query])
+
+# PullListByRepo
+# shows a list of all pulls for given repo
+class PullListByRepo(Resource):
+    def get(self, repo_name):
+        query = db.Pull.select().join(db.Repo).where(db.Repo.name == repo_name)
+        return jsonify([r.serialize() for r in query])
+
+# api.add_resource(Refresh, '/api/refresh')
+api.add_resource(RepoList, '/api/repo/')
+api.add_resource(PullList, '/api/pull/')
+api.add_resource(PullListByRepo, '/api/pull/<repo_name>')
+
+if __name__ == '__main__':
+    # DISABLE DEBUG FOR PRODUCTION
+    app.run(debug=True)
+
 # def abort_if_todo_doesnt_exist(todo_id):
 #     if todo_id not in TODOS:
 #         abort(404, message="Todo {} doesn't exist".format(todo_id))
@@ -64,33 +94,3 @@ api = Api(app)
 #             db.Pull.insert_many(pulls_data).execute()
 
 #         return {"message": "DB Refreshed"}, 201
-
-# RepoList
-# shows a list of all repos
-class RepoList(Resource):
-    def get(self):
-        query = db.Repo.select().dicts()
-        return [row for row in query], 200
-
- # PullList
-# shows a list of all pulls
-class PullList(Resource):
-    def get(self):
-        query = db.Pull.select()
-        return jsonify([r.serialize() for r in query])
-
-# PullListByRepo
-# shows a list of all pulls for given repo
-class PullListByRepo(Resource):
-    def get(self, repo_name):
-        query = db.Pull.select().join(db.Repo).where(db.Repo.name == repo_name)
-        return jsonify([r.serialize() for r in query])
-
-api.add_resource(Refresh, '/api/refresh')
-api.add_resource(RepoList, '/api/repo/')
-api.add_resource(PullList, '/api/pull/')
-api.add_resource(PullListByRepo, '/api/pull/<repo_name>')
-
-if __name__ == '__main__':
-    # DISABLE DEBUG FOR PRODUCTION
-    app.run(debug=True)

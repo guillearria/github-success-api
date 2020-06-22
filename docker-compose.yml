@@ -4,9 +4,9 @@ services:
   db:
     image: postgres:12-alpine
     environment:
-      - POSTGRES_USER=gh_analysis
-      - POSTGRES_PASSWORD=gh_analysis
-      - POSTGRES_DB=gh_analysis_dev
+      - POSTGRES_USER=gh_analysis_flask
+      - POSTGRES_PASSWORD=gh_analysis_flask
+      - POSTGRES_DB=gh_analysis_flask_dev
     volumes:
       - postgres_data:/var/lib/postgresql/data
     restart: always
