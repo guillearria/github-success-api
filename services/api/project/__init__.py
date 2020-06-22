@@ -1,9 +1,18 @@
+import os
 from flask import Flask, jsonify
 from flask_restful import reqparse, abort, Api, Resource
-from . import db
+from peewee import PostgresqlDatabase
 
 app = Flask(__name__)
 api = Api(app)
+
+db = PostgresqlDatabase(
+    os.getenv("DATABASE"),
+    user=os.getenv("POSTGRES_USER"),
+    password=os.getenv("POSTGRES_PASSWORD"),
+    host=os.getenv("SQL_HOST"), 
+    port=os.getenv("SQL_PORT")
+)
 
 # RepoList
 # shows a list of all repos

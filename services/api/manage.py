@@ -2,8 +2,7 @@ from flask.cli import FlaskGroup
 from github import Github
 from datetime import date, timedelta
 
-from project import app
-import project.db
+from project import app, db
 
 cli = FlaskGroup(app)
 
