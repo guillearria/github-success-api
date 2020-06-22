@@ -128,3 +128,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Environment files
+.env.dev
+.end.prod
+.end.prod.db
