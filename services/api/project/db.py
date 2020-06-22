@@ -6,8 +6,8 @@ db = PostgresqlDatabase(
     os.getenv("DATABASE"),
     user=os.getenv("POSTGRES_USER"), 
     password=os.getenv("POSTGRES_PASSWORD"),
-    host=os.getenv("POSTGRES_HOST"), 
-    port=os.getenv("POSTGRES_PORT")
+    host=os.getenv("SQL_HOST"), 
+    port=os.getenv("SQL_PORT")
 )
 
 class BaseModel(Model):
