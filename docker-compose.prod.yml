@@ -9,7 +9,9 @@ services:
       - ./.env.prod.db
     restart: always
   api:
-    build: ./services/api
+    build: 
+      context: ./services/api
+      dockerfile: Dockerfile.prod
     command: gunicorn --timeout 1200 -b 0.0.0.0:5000 manage:app
     ports:
       - "5000:5000"
