@@ -1,7 +1,5 @@
 from flask import Flask, jsonify
 from flask_restful import reqparse, abort, Api, Resource
-from github import Github
-from datetime import date, timedelta
 import db
 
 app = Flask(__name__)
