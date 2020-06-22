@@ -10,13 +10,15 @@ api = Api(app)
 class RepoList(Resource):
     def get(self):
         query = db.Repo.select().dicts()
+
         return [row for row in query], 200
 
- # PullList
+# PullList
 # shows a list of all pulls
 class PullList(Resource):
     def get(self):
         query = db.Pull.select()
+
         return jsonify([r.serialize() for r in query])
 
 # PullListByRepo
@@ -24,12 +26,14 @@ class PullList(Resource):
 class PullListByRepo(Resource):
     def get(self, repo_name):
         query = db.Pull.select().join(db.Repo).where(db.Repo.name == repo_name)
+        
         return jsonify([r.serialize() for r in query])
 
 # api.add_resource(Refresh, '/api/refresh')
 api.add_resource(RepoList, '/api/repo/')
 api.add_resource(PullList, '/api/pull/')
 api.add_resource(PullListByRepo, '/api/pull/<repo_name>')
+
 
 if __name__ == '__main__':
     # DISABLE DEBUG FOR PRODUCTION
