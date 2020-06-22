@@ -1,4 +1,5 @@
 import config
+import os
 from peewee import *
 from playhouse.shortcuts import model_to_dict
 
@@ -12,7 +13,7 @@ db = PostgresqlDatabase(
 
 class BaseModel(Model):
 
-    
+
     class Meta:
         database = db
 
