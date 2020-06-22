@@ -8,7 +8,7 @@ services:
       - POSTGRES_PASSWORD=gh_analysis
       - POSTGRES_DB=gh_analysis_dev
     volumes:
-      - /postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     restart: always
   api:
     build: ./services/api
@@ -22,15 +22,15 @@ services:
     depends_on:
       - db
     restart: always
-  dash:
-    build:
-      context: src/dash
-      dockerfile: Dockerfile
-    ports:
-      - "8050:8050"
-    environment:
-      - ENVIRONMENT=prod
-      - API_URL=http://api:5000/api
-    depends_on:
-      - api
-    restart: always
+  # dash:
+  #   build:
+  #     context: src/dash
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8050:8050"
+  #   environment:
+  #     - ENVIRONMENT=prod
+  #     - API_URL=http://api:5000/api
+  #   depends_on:
+  #     - api
+  #   restart: always
