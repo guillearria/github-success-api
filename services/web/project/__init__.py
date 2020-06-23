@@ -70,9 +70,9 @@ class PullListByRepo(Resource):
         return jsonify([r.serialize() for r in query])
 
 
-api.add_resource(RepoList, '/api/repo/')
-api.add_resource(PullList, '/api/pull/')
-api.add_resource(PullListByRepo, '/api/pull/<repo_name>')
+api.add_resource(RepoList, '/github/repo/')
+api.add_resource(PullList, '/github/pull/')
+api.add_resource(PullListByRepo, '/github/pull/<repo_name>')
 
 if __name__ == '__main__':
     DEBUG = bool(os.environ.get('DEBUG'))
