@@ -6,7 +6,6 @@ from playhouse.shortcuts import model_to_dict
 
 app = Flask(__name__)
 app.config.from_object(__name__)
-
 api = Api(app)
 
 db = PostgresqlDatabase(os.environ.get("POSTGRES_DB"), user=os.environ.get("POSTGRES_USER"), password=os.environ.get(
@@ -41,10 +40,12 @@ class Pull(BaseModel):
 
         return pull_dict
 
+
 # Index
 class Index(Resource):
     def get(self):
         return {"message": "Server running OK."}
+
 
 # RepoList
 # shows a list of all repos
@@ -73,6 +74,7 @@ class PullListByRepo(Resource):
 api.add_resource(RepoList, '/github/repo/')
 api.add_resource(PullList, '/github/pull/')
 api.add_resource(PullListByRepo, '/github/pull/<repo_name>')
+
 
 if __name__ == '__main__':
     DEBUG = bool(os.environ.get('DEBUG'))

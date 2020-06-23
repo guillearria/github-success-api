@@ -31,3 +31,6 @@ services:
   #     - API_URL=http://api:5000/api
   #   depends_on:
   #     - api
+
+volumes:
+  postgres_data:
