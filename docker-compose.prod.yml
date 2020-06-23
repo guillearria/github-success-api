@@ -7,7 +7,6 @@ services:
       - postgres_data:/var/lib/postgresql/data
     env_file:
       - ./.env.prod.db
-    restart: always
   api:
     build: 
       context: ./services/api
@@ -19,7 +18,6 @@ services:
       - ./.env.prod
     depends_on:
       - db
-    restart: always
   # dash:
   #   build:
   #     context: src/dash
@@ -31,7 +29,6 @@ services:
   #     - API_URL=http://api:5000/api
   #   depends_on:
   #     - api
-  #   restart: always
 
 volumes:
   postgres_data:

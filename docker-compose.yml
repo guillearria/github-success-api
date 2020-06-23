@@ -9,19 +9,17 @@ services:
       - POSTGRES_DB=gh_analysis_flask_dev
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    restart: always
   api:
     build: ./services/api
-    command: gunicorn --timeout 1200 -b 0.0.0.0:5000 manage:app
+    command: python manage.py run -h 0.0.0.0
     volumes:
       - ./services/api/:/usr/src/app/
     ports:
-      - "5000:5000"
+      - 5000:5000
     env_file:
       - ./.env.dev
     depends_on:
       - db
-    restart: always
   # dash:
   #   build:
   #     context: src/dash
@@ -33,4 +31,3 @@ services:
   #     - API_URL=http://api:5000/api
   #   depends_on:
   #     - api
-  #   restart: always
