@@ -21,7 +21,3 @@ COPY . /usr/src/app/
 
 # run entrypoint.sh
 ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
-
-# ADD . /app
-# EXPOSE  5000
-# CMD ["gunicorn", "--timeout", "1200", "-b", "0.0.0.0:5000", "app:app"]
