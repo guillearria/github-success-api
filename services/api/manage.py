@@ -6,13 +6,14 @@ from project import app, db
 
 cli = FlaskGroup(app)
 
-
 @cli.command("create_db")
 def create_db():
-    # db.connect()
-    db.drop_tables([db.Repo, db.Pull])
-    db.create_tables([db.Repo, db.Pull])
+    db.connect()
+    if db.table_exists("Repo"):
+        db.drop_tables([db.Repo, db.Pull])
 
+    with db.connection_context():
+        db.create_tables([db.Repo, db.Pull])
 
 @cli.command("seed_db")
 def seed_db():
