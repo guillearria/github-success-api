@@ -9,11 +9,11 @@ services:
       - POSTGRES_DB=gh_analysis_flask_dev
     volumes:
       - postgres_data:/var/lib/postgresql/data
-  api:
-    build: ./services/api
+  web:
+    build: ./services/web
     command: python manage.py run -h 0.0.0.0
     volumes:
-      - ./services/api/:/usr/src/app/
+      - ./services/web/:/usr/src/app/
     ports:
       - 5000:5000
     env_file:
