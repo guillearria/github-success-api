@@ -43,8 +43,6 @@ class Pull(BaseModel):
 
 # RepoList
 # shows a list of all repos
-
-
 class RepoList(Resource):
     def get(self):
         query = db.Repo.select().dicts()
