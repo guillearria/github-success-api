@@ -70,7 +70,6 @@ class PullListByRepo(Resource):
         return jsonify([r.serialize() for r in query])
 
 
-# api.add_resource(Refresh, '/api/refresh')
 api.add_resource(RepoList, '/api/repo/')
 api.add_resource(PullList, '/api/pull/')
 api.add_resource(PullListByRepo, '/api/pull/<repo_name>')
