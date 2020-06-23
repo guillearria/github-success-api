@@ -5,10 +5,11 @@ from peewee import *
 from playhouse.shortcuts import model_to_dict
 
 app = Flask(__name__)
+app.config.from_object(__name__)
+
 api = Api(app)
 
-db = PostgresqlDatabase(None)
-db.init(os.environ.get("POSTGRES_DB"), user=os.environ.get("POSTGRES_USER"), password=os.environ.get(
+db = PostgresqlDatabase(os.environ.get("POSTGRES_DB"), user=os.environ.get("POSTGRES_USER"), password=os.environ.get(
     "POSTGRES_PASSWORD"), host=os.environ.get("SQL_HOST"), port=os.environ.get("SQL_PORT"))
 
 
@@ -42,6 +43,8 @@ class Pull(BaseModel):
 
 # RepoList
 # shows a list of all repos
+
+
 class RepoList(Resource):
     def get(self):
         query = db.Repo.select().dicts()
