@@ -41,6 +41,11 @@ class Pull(BaseModel):
 
         return pull_dict
 
+# Index
+class Index(Resource):
+    def get(self):
+        return {"message": "Server running OK."}
+
 # RepoList
 # shows a list of all repos
 class RepoList(Resource):
