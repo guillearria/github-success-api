@@ -6,14 +6,12 @@ from peewee import *
 from playhouse.shortcuts import model_to_dict
 from playhouse.db_url import connect
 
+
 app = Flask(__name__)
 app.config.from_object(__name__)
 api = Api(app)
-
-# db = PostgresqlDatabase(os.environ.get("POSTGRES_DB"), user=os.environ.get("POSTGRES_USER"), password=os.environ.get(
-#     "POSTGRES_PASSWORD"), host=os.environ.get("SQL_HOST"), port=os.environ.get("SQL_PORT"))
-
 db = connect(os.environ.get('DATABASE_URL'))
+
 
 class BaseModel(Model):
     class Meta:

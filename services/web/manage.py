@@ -4,16 +4,20 @@ from datetime import date, timedelta
 
 from project import app, db
 
+
 cli = FlaskGroup(app)
+
 
 @cli.command("create_db")
 def create_db():
-    db.connect()
+    # db.connect()
     if db.table_exists("Repo"):
-        db.drop_tables([db.Repo, db.Pull])
-
+        db.drop_tables([db.Repo])
+    if db.table_exists("Pull"):
+        db.drop_tables([db.Pull])
     with db.connection_context():
         db.create_tables([db.Repo, db.Pull])
+
 
 @cli.command("seed_db")
 def seed_db():
