@@ -8,8 +8,8 @@ app = Flask(__name__)
 api = Api(app)
 
 db = PostgresqlDatabase(None)
-db.init(os.getenv("POSTGRES_DB"), user=os.getenv("POSTGRES_USER"), password=os.getenv(
-    "POSTGRES_PASSWORD"), host=os.getenv("SQL_HOST"), port=os.getenv("SQL_PORT"))
+db.init(os.environ.get("POSTGRES_DB"), user=os.environ.get("POSTGRES_USER"), password=os.environ.get(
+    "POSTGRES_PASSWORD"), host=os.environ.get("SQL_HOST"), port=os.environ.get("SQL_PORT"))
 
 
 class BaseModel(Model):
@@ -70,8 +70,8 @@ api.add_resource(PullList, '/api/pull/')
 api.add_resource(PullListByRepo, '/api/pull/<repo_name>')
 
 if __name__ == '__main__':
-    # DISABLE DEBUG FOR PRODUCTION
-    app.run(debug=True)
+    DEBUG = bool(os.environ.get('DEBUG'))
+    app.run(debug=DEBUG)
 
 # def abort_if_todo_doesnt_exist(todo_id):
 #     if todo_id not in TODOS:
