@@ -18,11 +18,13 @@ class Repo(db.Model):
     __tablename__ = "repos"
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128), unique=True, nullable=False)
+    owner = db.Column(db.String(128), nullable=False)
+    repo = db.Column(db.String(128), unique=True, nullable=False)
     pulls = db.relationship('Pull', backref='repos', lazy=True)
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, owner, repo):
+        self.owner = owner
+        self.repo = repo
 
 
 class Pull(db.Model):
