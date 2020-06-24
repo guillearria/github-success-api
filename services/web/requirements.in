@@ -1,6 +1,6 @@
 flask
 flask_restful
-PyGithub
-peewee
-gunicorn
+Flask-SQLAlchemy
 psycopg2-binary
+PyGithub
+gunicorn
