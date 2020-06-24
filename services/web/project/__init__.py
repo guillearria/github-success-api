@@ -2,15 +2,16 @@ import os
 
 from flask import Flask, jsonify
 from flask_restful import reqparse, abort, Api, Resource
-from peewee import *
+from flask_sqlalchemy import SQLAlchemy
+
 from playhouse.shortcuts import model_to_dict
 from playhouse.db_url import connect
 
 
 app = Flask(__name__)
-app.config.from_object(__name__)
+app.config.from_object("project.config.Config")
 api = Api(app)
-db = connect(os.environ.get('DATABASE_URL'))
+db = SQLAlchemy(app)
 
 
 class BaseModel(Model):
