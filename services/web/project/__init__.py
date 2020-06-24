@@ -14,20 +14,19 @@ api = Api(app)
 db = SQLAlchemy(app)
 
 
-class BaseModel(Model):
-    class Meta:
-        database = db
+class Repo(db.Model):
+    __tablename__ = "repos"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128), unique=True, nullable=False)
+    pulls = db.relationship('Pull', backref='repos', lazy=True)
+
+    def __init__(self, name):
+        self.name = name
 
 
-class Repo(BaseModel):
-    name = CharField(255)
-
-    def serialize(self):
-        repo_dict = model_to_dict(self)
-        return repo_dict
-
-
-class Pull(BaseModel):
+class Pull(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
     repo_id = ForeignKeyField(Repo, backref='pulls')
     created_date = DateTimeField()
     is_merged = BooleanField()
