@@ -26,6 +26,8 @@ class Repo(db.Model):
 
 
 class Pull(db.Model):
+    __tablename__ = "pulls"
+
     id = db.Column(db.Integer, primary_key=True)
     repo_id = db.Column(db.Integer, db.ForeignKey('repos.id'), nullable=False)
     created_date = db.Column(db.DateTime, nullable=False)

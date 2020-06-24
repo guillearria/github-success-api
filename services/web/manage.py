@@ -10,13 +10,9 @@ cli = FlaskGroup(app)
 
 @cli.command("create_db")
 def create_db():
-    # db.connect()
-    if db.table_exists("Repo"):
-        db.drop_tables([db.Repo])
-    if db.table_exists("Pull"):
-        db.drop_tables([db.Pull])
-    with db.connection_context():
-        db.create_tables([db.Repo, db.Pull])
+    db.drop_all()
+    db.create_all()
+    db.session.commit()
 
 
 @cli.command("seed_db")
