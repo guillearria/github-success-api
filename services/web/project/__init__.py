@@ -71,7 +71,7 @@ class PullListByRepo(Resource):
         query = db.Pull.select().join(db.Repo).where(db.Repo.name == repo_name)
         return jsonify([r.serialize() for r in query])
 
-
+api.add_resource(Index, '/')
 api.add_resource(RepoList, '/github/repo/')
 api.add_resource(PullList, '/github/pull/')
 api.add_resource(PullListByRepo, '/github/pull/<repo_name>')
