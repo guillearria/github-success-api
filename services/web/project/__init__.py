@@ -27,19 +27,17 @@ class Repo(db.Model):
 
 class Pull(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    repo_id = ForeignKeyField(Repo, backref='pulls')
-    created_date = DateTimeField()
-    is_merged = BooleanField()
-    additions = IntegerField()
-    deletions = IntegerField()
+    repo_id = db.Column(db.Integer, db.ForeignKey('repos.id'), nullable=False)
+    created_date = db.Column(db.DateTime, nullable=False)
+    is_merged = db.Column(db.Boolean, nullable=False)
+    additions = db.Column(db.Integer, nullable=False)
+    deletions = db.Column(db.Integer, nullable=False)
 
-    def serialize(self):
-        pull_dict = model_to_dict(self)
-        pull_dict["created_date"] = (
-            pull_dict["created_date"].strftime('%Y-%m-%d')
-        )
-
-        return pull_dict
+    def __init__(self, created_date, is_merged, additions, deletions):
+        self.created_date = created_date
+        self.is_merged = is_merged
+        self.additions = additions
+        self.deletions = deletions
 
 
 # Index
