@@ -18,6 +18,12 @@ services:
       - ./.env.prod
     depends_on:
       - db
+  nginx:
+    build: ./services/nginx
+    ports:
+      - 1337:80
+    depends_on:
+      - web
   # dash:
   #   build:
   #     context: src/dash
