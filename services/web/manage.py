@@ -2,7 +2,7 @@ from flask.cli import FlaskGroup
 from github import Github
 from datetime import date, timedelta
 
-from project import app, db
+from project import *
 
 
 cli = FlaskGroup(app)
@@ -22,7 +22,7 @@ def create_db():
 def seed_repos_tbl():
     split_repo_names = [[name.split("/")[0],name.split("/")[1]] for name in temp_repos]
 
-    repo_objects = [db.Repo(names[0], names[1]) for names in split_repo_names]
+    repo_objects = [Repo(names[0], names[1]) for names in split_repo_names]
     db.session.add_all(repo_objects)
 
     db.session.commit()
@@ -59,7 +59,7 @@ def seed_pulls_tbl():
                                 "deletions": pull.deletions
                                 })
                             
-    pull_objects = [db.Pull(data["repo_id"], data["created_date"], data["is_merged"], data["additions"], data["deletions"]) for data in pulls_data]
+    pull_objects = [Pull(data["repo_id"], data["created_date"], data["is_merged"], data["additions"], data["deletions"]) for data in pulls_data]
     db.session.add_all(pull_objects)
 
     db.session.commit()
