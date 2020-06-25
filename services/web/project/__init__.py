@@ -37,7 +37,8 @@ class Pull(db.Model):
     additions = db.Column(db.Integer, nullable=False)
     deletions = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, created_date, is_merged, additions, deletions):
+    def __init__(self, repo_id, created_date, is_merged, additions, deletions):
+        self.repo_id = repo_id
         self.created_date = created_date
         self.is_merged = is_merged
         self.additions = additions
