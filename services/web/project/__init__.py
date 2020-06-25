@@ -4,12 +4,10 @@ from flask import Flask, jsonify
 from flask_restful import reqparse, abort, Api, Resource
 from flask_sqlalchemy import SQLAlchemy
 
-from playhouse.shortcuts import model_to_dict
-from playhouse.db_url import connect
-
 
 app = Flask(__name__)
 app.config.from_object("project.config.Config")
+
 api = Api(app)
 db = SQLAlchemy(app)
 
@@ -55,16 +53,16 @@ class Index(Resource):
 # shows a list of all repos
 class RepoList(Resource):
     def get(self):
-        query = db.Repo.select().dicts()
-        return [row for row in query], 200
+        repos = db.Repo.query.all()
+        return repos, 200
 
 
 # PullList
 # shows a list of all pulls
 class PullList(Resource):
     def get(self):
-        query = db.Pull.select()
-        return jsonify([r.serialize() for r in query])
+        pulls = db.Pull.query.all()
+        return pulls, 200
 
 
 # PullListByRepo
