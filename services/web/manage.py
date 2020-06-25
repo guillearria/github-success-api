@@ -52,7 +52,7 @@ def seed_pulls_tbl():
     for repo_name in repo_names:
         pulls = pulls_pls_3day[repo_name]
         for pull in pulls:
-            pulls_data.append({"repo_id": db.Repo.query.filter_by(repo=repo_name).first().id,
+            pulls_data.append({"repo_id": Repo.query.filter_by(repo=repo_name).first().id,
                                 "created_date": pull.created_at.date(),
                                 "is_merged": pull.merged,
                                 "additions": pull.additions,
