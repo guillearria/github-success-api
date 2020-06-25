@@ -20,13 +20,17 @@ def create_db():
 
 @cli.command("seed_repos_tbl")
 def seed_repos_tbl():
-    repo_names = [g.get_repo(repo).full_name for repo in temp_repos]
-    split_repo_names = [[name.split("/")[0],name.split("/")[1]] for name in repo_names]
+    split_repo_names = [[name.split("/")[0],name.split("/")[1]] for name in temp_repos]
 
-    repo_objects = [db.Repo(owner=names[0], repo=[1]) for names in split_repo_names]
+    repo_objects = [db.Repo(owner=names[0], repo=names[1]) for names in split_repo_names]
     db.session.add_all(repo_objects)
 
     db.session.commit()
+
+
+@cli.command("seed_pulls_tbl")
+def seed_pulls_tbl():
+
 
 
 if __name__ == "__main__":
