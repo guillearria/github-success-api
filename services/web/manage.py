@@ -7,7 +7,6 @@ from project import *
 
 cli = FlaskGroup(app)
 
-g = Github("sapinspys", "GithubCS1!")
 temp_repos = ["kubernetes/kubernetes", "apache/spark"]
 
 
