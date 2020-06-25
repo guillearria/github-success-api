@@ -20,7 +20,6 @@ class Repo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     owner = db.Column(db.String(128), nullable=False)
     repo = db.Column(db.String(128), unique=True, nullable=False)
-    pulls = db.relationship('Pull', backref='repos', lazy=True)
 
     def __init__(self, owner, repo):
         self.owner = owner
@@ -31,11 +30,12 @@ class Pull(db.Model):
     __tablename__ = "pulls"
 
     id = db.Column(db.Integer, primary_key=True)
-    repo_id = db.Column(db.Integer, db.ForeignKey('repos.id'), nullable=False)
     created_date = db.Column(db.DateTime, nullable=False)
     is_merged = db.Column(db.Boolean, nullable=False)
     additions = db.Column(db.Integer, nullable=False)
     deletions = db.Column(db.Integer, nullable=False)
+    repo_id = db.Column(db.Integer, db.ForeignKey('repos.id'), nullable=False)
+    repo = db.relationship('Repo', backref='pulls')
 
     def __init__(self, repo_id, created_date, is_merged, additions, deletions):
         self.repo_id = repo_id
@@ -51,9 +51,12 @@ class RepoSchema(ma.SQLAlchemyAutoSchema):
 
 
 class PullSchema(ma.SQLAlchemyAutoSchema):
+    repo = ma.Nested(RepoSchema)
+
     class Meta:
         model = Pull
-        include_fk = True
+        include_fk = False
+
 
 repo_schema = RepoSchema()
 repos_schema = RepoSchema(many=True)
@@ -87,7 +90,7 @@ class PullList(Resource):
 # shows a list of all pulls for given repo
 class PullListByRepo(Resource):
     def get(self, repo_name):
-        pulls = Repo.query.join(Pull).filter(Repo.repo == repo_name).all()
+        pulls = Pull.query.filter(Repo.repo==repo_name).join(Repo).all()
         return pulls_schema.dump(pulls), 200
 
 
