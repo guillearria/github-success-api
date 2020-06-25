@@ -131,5 +131,5 @@ dmypy.json
 
 # Environment files
 .env.dev
-.end.prod
-.end.prod.db
+.env.prod
+.env.prod.db
