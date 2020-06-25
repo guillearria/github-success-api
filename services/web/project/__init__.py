@@ -69,7 +69,7 @@ class PullList(Resource):
 # shows a list of all pulls for given repo
 class PullListByRepo(Resource):
     def get(self, repo_name):
-        pulls = Repo.query.join(Pull).filter(Repo.repo == repo_name)
+        pulls = Repo.query.join(Pull).filter(Repo.repo == repo_name).all()
         return pulls, 200
 
 api.add_resource(Index, '/')
