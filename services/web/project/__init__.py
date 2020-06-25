@@ -45,6 +45,22 @@ class Pull(db.Model):
         self.deletions = deletions
 
 
+class RepoSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Repo
+
+
+class PullSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Pull
+        include_fk = True
+
+repo_schema = RepoSchema()
+repos_schema = RepoSchema(many=True)
+pull_schema = PullSchema()
+pulls_schema = PullSchema(many=True)
+
+
 # Index
 class Index(Resource):
     def get(self):
@@ -55,16 +71,16 @@ class Index(Resource):
 # shows a list of all repos
 class RepoList(Resource):
     def get(self):
-        repos = Repo.query.all()
-        return repos, 200
+        all_repos = Repo.query.all()
+        return repos_schema.dump(all_repos), 200
 
 
 # PullList
 # shows a list of all pulls
 class PullList(Resource):
     def get(self):
-        pulls = Pull.query.all()
-        return pulls, 200
+        all_pulls = Pull.query.all()
+        return pulls_schema.dump(all_pulls), 200
 
 
 # PullListByRepo
@@ -72,7 +88,8 @@ class PullList(Resource):
 class PullListByRepo(Resource):
     def get(self, repo_name):
         pulls = Repo.query.join(Pull).filter(Repo.repo == repo_name).all()
-        return pulls, 200
+        return pulls_schema.dump(pulls), 200
+
 
 api.add_resource(Index, '/')
 api.add_resource(RepoList, '/github/repo/')
