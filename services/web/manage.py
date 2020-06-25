@@ -1,3 +1,4 @@
+import click
 from flask.cli import FlaskGroup
 from github import Github
 from datetime import date, timedelta
@@ -25,10 +26,13 @@ def seed_repos_tbl():
     db.session.add_all(repo_objects)
 
     db.session.commit()
-
+    
 
 @cli.command("seed_pulls_tbl")
-def seed_pulls_tbl():
+@click.argument("username")
+@click.argument("password")
+def seed_pulls_tbl(username, password):
+    g = Github(username, password)
     repos = [g.get_repo(repo) for repo in temp_repos]
     pulls_paginatedLists = { repo.name: repo.get_pulls(state="all") for repo in repos }
 
