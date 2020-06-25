@@ -53,7 +53,7 @@ class Index(Resource):
 # shows a list of all repos
 class RepoList(Resource):
     def get(self):
-        repos = db.Repo.query.all()
+        repos = Repo.query.all()
         return repos, 200
 
 
@@ -61,7 +61,7 @@ class RepoList(Resource):
 # shows a list of all pulls
 class PullList(Resource):
     def get(self):
-        pulls = db.Pull.query.all()
+        pulls = Pull.query.all()
         return pulls, 200
 
 
@@ -69,8 +69,8 @@ class PullList(Resource):
 # shows a list of all pulls for given repo
 class PullListByRepo(Resource):
     def get(self, repo_name):
-        query = db.Pull.select().join(db.Repo).where(db.Repo.name == repo_name)
-        return jsonify([r.serialize() for r in query])
+        pulls = Repo.query.join(Pull).filter(Repo.repo == repo_name)
+        return pulls, 200
 
 api.add_resource(Index, '/')
 api.add_resource(RepoList, '/github/repo/')
