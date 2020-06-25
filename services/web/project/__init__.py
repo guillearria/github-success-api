@@ -19,11 +19,11 @@ class Repo(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     owner = db.Column(db.String(128), nullable=False)
-    repo = db.Column(db.String(128), unique=True, nullable=False)
+    name = db.Column(db.String(128), unique=True, nullable=False)
 
-    def __init__(self, owner, repo):
+    def __init__(self, owner, name):
         self.owner = owner
-        self.repo = repo
+        self.name = name
 
 
 class Pull(db.Model):
@@ -90,7 +90,7 @@ class PullList(Resource):
 # shows a list of all pulls for given repo
 class PullListByRepo(Resource):
     def get(self, repo_name):
-        pulls = Pull.query.filter(Repo.repo==repo_name).join(Repo).all()
+        pulls = Pull.query.filter(Repo.name==repo_name).join(Repo).all()
         return pulls_schema.dump(pulls), 200
 
 
