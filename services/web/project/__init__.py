@@ -2,6 +2,7 @@ import os
 
 from flask import Flask, jsonify
 from flask_restful import Api, Resource
+from functions import *
 
 
 app = Flask(__name__)
@@ -14,7 +15,16 @@ class Index(Resource):
         return {"message": "Server running OK."}
 
 
+# Top 10 All-Time Contributors Data
+class Top10Contributors(Resource):
+    def get(self, full_name):
+        token = request.headers['Authorization']
+        data = top_contributors(token, full_name)
+        return data
+
+
 api.add_resource(Index, '/')
+api.add_resource(Top10Contributors, '/visualization/top10contributors/<str:full_name>')
 
 
 if __name__ == '__main__':
