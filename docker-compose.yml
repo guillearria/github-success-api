@@ -1,14 +1,6 @@
 version: '3.8'
 
 services:
-  db:
-    image: postgres:12-alpine
-    environment:
-      - POSTGRES_USER=gh_analysis_flask
-      - POSTGRES_PASSWORD=gh_analysis_flask
-      - POSTGRES_DB=gh_analysis_flask_dev
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
   web:
     build: ./services/web
     command: python manage.py run -h 0.0.0.0
@@ -18,19 +10,3 @@ services:
       - 5000:5000
     env_file:
       - ./.env.dev
-    depends_on:
-      - db
-  # dash:
-  #   build:
-  #     context: src/dash
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "8050:8050"
-  #   environment:
-  #     - ENVIRONMENT=prod
-  #     - API_URL=http://api:5000/api
-  #   depends_on:
-  #     - api
-
-volumes:
-  postgres_data:
