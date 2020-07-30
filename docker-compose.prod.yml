@@ -24,17 +24,6 @@ services:
       - 1337:80
     depends_on:
       - web
-  # dash:
-  #   build:
-  #     context: src/dash
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "8050:8050"
-  #   environment:
-  #     - ENVIRONMENT=prod
-  #     - API_URL=http://api:5000/api
-  #   depends_on:
-  #     - api
 
 volumes:
   postgres_data:
