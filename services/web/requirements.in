@@ -1,8 +1,4 @@
 flask
 flask_restful
-Flask-SQLAlchemy
-flask-marshmallow
-marshmallow-sqlalchemy
-psycopg2-binary
 PyGithub
 gunicorn
