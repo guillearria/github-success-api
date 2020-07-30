@@ -2,8 +2,7 @@ import os
 
 from flask import Flask, jsonify
 from flask_restful import Api, Resource
-from functions import *
-
+from .functions import *
 
 app = Flask(__name__)
 api = Api(app)
@@ -19,7 +18,7 @@ class Index(Resource):
 class Top10Contributors(Resource):
     def get(self, full_name):
         token = request.headers['Authorization']
-        data = top_contributors(token, full_name)
+        data = func.top_contributors(token, full_name)
         return data
 
 
