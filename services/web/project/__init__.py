@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_restful import Api, Resource
 from .functions import *
 
@@ -16,14 +16,14 @@ class Index(Resource):
 
 # Top 10 All-Time Contributors Data
 class Top10Contributors(Resource):
-    def get(self, full_name):
+    def get(self, owner, repo):
         token = request.headers['Authorization']
-        data = func.top_contributors(token, full_name)
+        data = top_contributors(token, f'{owner}/{repo}')
         return data
 
 
 api.add_resource(Index, '/')
-api.add_resource(Top10Contributors, '/visualization/top10contributors/<str:full_name>')
+api.add_resource(Top10Contributors, '/visualization/top10contributors/<owner>/<repo>')
 
 
 if __name__ == '__main__':
