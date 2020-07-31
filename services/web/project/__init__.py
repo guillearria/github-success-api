@@ -1,10 +1,12 @@
 import os
 
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 from flask_restful import Api, Resource
 from .functions import *
 
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 
 
