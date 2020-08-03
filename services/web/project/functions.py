@@ -64,8 +64,8 @@ def repository_summary(token, full_name):
       "updated": repo.last_modified,
       "contributors": repo.get_contributors().totalCount,
       "total_commits": repo.get_commits().totalCount,
-      "open pull_requests": repo.get_pulls().totalCount,
-      "closed_pull_requests": repo.get_pulls(state="closed").totalCount,
+      "open_pull_requests": repo.get_pulls().totalCount,
+      # "closed_pull_requests": repo.get_pulls(state="closed").totalCount,
     }
 
     return repository_summary
