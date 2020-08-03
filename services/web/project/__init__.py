@@ -24,8 +24,26 @@ class Top10Contributors(Resource):
         return data
 
 
+# Owner Summary
+class OwnerSummary(Resource):
+    def get(self, owner, repo):
+        token = request.headers['Authorization']
+        data = owner_summary(token, f'{owner}/{repo}')
+        return data
+
+
+# Repo Summary
+class RepoSummary(Resource):
+    def get(self, owner, repo):
+        token = request.headers['Authorization']
+        data = repository_summary(token, f'{owner}/{repo}')
+        return data
+
+
 api.add_resource(Index, '/')
 api.add_resource(Top10Contributors, '/visualization/top10contributors/<owner>/<repo>')
+api.add_resource(OwnerSummary, '/owner-summary/<owner>/<repo>')
+api.add_resource(RepoSummary, '/repo-summary/<owner>/<repo>')
 
 
 if __name__ == '__main__':

@@ -43,7 +43,7 @@ def owner_summary(token, full_name):
     return owner_summary
 
 
-def repository_summary():
+def repository_summary(token, full_name):
     """Returns summary of useful repository owner data for the given repository.
 
     Keywork arguments:
