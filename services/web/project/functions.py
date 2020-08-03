@@ -23,8 +23,8 @@ def top_contributors(token, full_name):
     return top_contributors
 
 
-def owner_summary(token, full_name):
-    """Returns summary of useful repository owner data for the given repository.
+def repository_summary(token, full_name):
+    """Returns summary of useful repository and owner data for the given repository.
 
     Keywork arguments:
     token -- GitHub authorization token
@@ -32,40 +32,29 @@ def owner_summary(token, full_name):
     """
     g = Github(token)
     owner = g.get_user(full_name.split("/")[0])
-
-    owner_summary = {
-      'avatar_url': owner.avatar_url,
-      'gh_url': owner.url,
-      'name': owner.name,
-      'login': owner.login,
-    }
-
-    return owner_summary
-
-
-def repository_summary(token, full_name):
-    """Returns summary of useful repository owner data for the given repository.
-
-    Keywork arguments:
-    token -- GitHub authorization token
-    full_name -- owner and name of repository in format: "owner/repo"
-    """
-    g = Github(token)
     repo = g.get_repo(full_name)
 
-    repository_summary = {
-      "watchers": repo.subscribers_count,
-      "stars": repo.watchers_count,
-      "forks": repo.forks_count,
-      'full_name': repo.full_name,
-      'description': repo.description,
-      'homepage_url': repo.homepage,
-      'languages_url': repo.languages_url,
-      "updated": repo.last_modified,
-      "contributors": repo.get_contributors().totalCount,
-      "total_commits": repo.get_commits().totalCount,
-      "open_pull_requests": repo.get_pulls().totalCount,
-      # "closed_pull_requests": repo.get_pulls(state="closed").totalCount,
-    }
+    summary = [
+        {
+            'avatar_url': owner.avatar_url,
+            'gh_url': owner.url,
+            'name': owner.name,
+            'login': owner.login,
+        },
+        {
+            "watchers": repo.subscribers_count,
+            "stars": repo.watchers_count,
+            "forks": repo.forks_count,
+            'full_name': repo.full_name,
+            'description': repo.description,
+            'homepage_url': repo.homepage,
+            'languages_url': repo.languages_url,
+            "updated": repo.last_modified,
+            "contributors": repo.get_contributors().totalCount,
+            "total_commits": repo.get_commits().totalCount,
+            "open_pull_requests": repo.get_pulls().totalCount,
+            # "closed_pull_requests": repo.get_pulls(state="closed").totalCount,
+        }
+    ]
 
-    return repository_summary
+    return summary
