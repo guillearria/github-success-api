@@ -1,5 +1,6 @@
 from github import Github
 import pandas as pd
+import json
 
 def repository_summary(token, full_name):
     """Returns summary of useful repository and owner data for the given repository.
@@ -55,7 +56,9 @@ def top_contributors(token, full_name):
         'total_commits': [stat.total for stat in stats],
     }
 
-    return top_contributors
+    serialized_data = json.dumps(top_contributors, default=str)
+
+    return serialized_data
 
 def yearly_commit_activity(token, full_name):
     """Displays commit activity grouped by week for the last year.
@@ -73,4 +76,6 @@ def yearly_commit_activity(token, full_name):
       'total_commits': [stat.total for stat in stats],
     }
 
-    return yearly_commit_activity
+    serialized_data = json.dumps(yearly_commit_activity, default=str)
+
+    return serialized_data
