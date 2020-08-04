@@ -16,6 +16,14 @@ class Index(Resource):
         return {"message": "Server running OK."}
 
 
+# Repo Summary
+class RepoSummary(Resource):
+    def get(self, owner, repo):
+        token = request.headers['Authorization']
+        data = repository_summary(token, f'{owner}/{repo}')
+        return data
+
+
 # Top 10 All-Time Contributors Data
 class Top10Contributors(Resource):
     def get(self, owner, repo):
@@ -24,11 +32,11 @@ class Top10Contributors(Resource):
         return data
 
 
-# Repo Summary
-class RepoSummary(Resource):
+# Yearly Commit Activity
+class YearlyCommitActivity(Resource):
     def get(self, owner, repo):
         token = request.headers['Authorization']
-        data = repository_summary(token, f'{owner}/{repo}')
+        data = yearly_commit_activity(token, f'{owner}/{repo}')
         return data
 
 

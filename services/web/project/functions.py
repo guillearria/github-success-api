@@ -1,28 +1,6 @@
 from github import Github
 import pandas as pd
 
-
-def top_contributors(token, full_name):
-    """Return top 10 all-time contributors for the given repository.
-
-    Keywork arguments:
-    token -- GitHub authorization token
-    full_name -- owner and name of repository in format: "owner/repo"
-    """
-    g = Github(token)
-    repo = g.get_repo(full_name)
-    stats = repo.get_stats_contributors()[90:]
-
-    top_contributors = {
-        'user': [stat.author.login for stat in stats],
-        'name': [g.get_user(stat.author.login).name for stat in stats],
-        'followers': [g.get_user(stat.author.login).followers for stat in stats],
-        'total_commits': [stat.total for stat in stats],
-    }
-
-    return top_contributors
-
-
 def repository_summary(token, full_name):
     """Returns summary of useful repository and owner data for the given repository.
 
@@ -31,10 +9,10 @@ def repository_summary(token, full_name):
     full_name -- owner and name of repository in format: "owner/repo"
     """
     g = Github(token)
-    owner = g.get_user(full_name.split("/")[0])
     repo = g.get_repo(full_name)
+    owner = repo.owner
 
-    summary = [
+    repository_summary = [
         {
             'avatar_url': owner.avatar_url,
             'gh_url': owner.url,
@@ -57,4 +35,42 @@ def repository_summary(token, full_name):
         }
     ]
 
-    return summary
+    return repository_summary
+
+def top_contributors(token, full_name):
+    """Return top 10 all-time contributors for the given repository.
+
+    Keywork arguments:
+    token -- GitHub authorization token
+    full_name -- owner and name of repository in format: "owner/repo"
+    """
+    g = Github(token)
+    repo = g.get_repo(full_name)
+    stats = repo.get_stats_contributors()[90:]
+
+    top_contributors = {
+        'user': [stat.author.login for stat in stats],
+        'name': [g.get_user(stat.author.login).name for stat in stats],
+        'followers': [g.get_user(stat.author.login).followers for stat in stats],
+        'total_commits': [stat.total for stat in stats],
+    }
+
+    return top_contributors
+
+def yearly_commit_activity(token, full_name):
+    """Displays commit activity grouped by week for the last year.
+
+    Keywork arguments:
+    token -- GitHub authorization token
+    full_name -- owner and name of repository in format: "owner/repo"
+    """
+    g = Github(token)
+    repo = g.get_repo(full_name)
+    stats = repo.get_stats_commit_activity()
+
+    yearly_commit_activity = {
+      'week': [stat.week for stat in stats],
+      'total_commits': [stat.total for stat in stats],
+    }
+
+    return yearly_commit_activity
