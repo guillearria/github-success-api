@@ -96,9 +96,9 @@ def yearly_code_frequency(token, full_name):
     while len(months_included) < 12:
         for stat in stats:
             mo = stat.week.month
-        if mo not in months_included:
-            months_included.append(mo)
-            stats_included.append(stat)
+            if mo not in months_included:
+                months_included.append(mo)
+                stats_included.append(stat)
 
     yearly_code_frequency = {
         'week': [stat.week for stat in stats_included],
