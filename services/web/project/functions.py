@@ -79,3 +79,33 @@ def yearly_commit_activity(token, full_name):
     serialized_data = json.dumps(yearly_commit_activity, default=str)
 
     return serialized_data
+
+def yearly_code_frequency(token, full_name):
+    """Displays the number of additions and deletions pushed over the last year.
+
+    Keywork arguments:
+    token -- GitHub authorization token
+    full_name -- owner and name of repository in format: "owner/repo"
+    """
+    g = Github(token)
+    repo = g.get_repo(full_name)
+    stats = repo.get_stats_code_frequency()[::-1]
+    months_included = []
+    stats_included = []
+
+    while len(months_included) < 12:
+        for stat in stats:
+            mo = stat.week.month
+        if mo not in months_included:
+            months_included.append(mo)
+            stats_included.append(stat)
+
+    yearly_code_frequency = {
+        'week': [stat.week for stat in stats_included],
+        'additions': [stat.additions for stat in stats_included],
+        'deletions': [stat.deletions for stat in stats_included]
+    }
+
+    serialized_data = json.dumps(yearly_code_frequency, default=str)
+
+    return serialized_data
