@@ -1,5 +1,3 @@
-import os
-
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_restful import Api, Resource, abort
@@ -58,5 +56,4 @@ api.add_resource(YearlyCodeFrequency, '/visualization/yearly-code-frequency/<own
 
 
 if __name__ == '__main__':
-    DEBUG = bool(os.environ.get('DEBUG'))
-    app.run(debug=DEBUG)
+    app.run()
