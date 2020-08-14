@@ -3,7 +3,7 @@ from flask_cors import CORS
 from flask_restful import Api, Resource, abort
 from .functions import *
 
-app = Flask(__name__)
+application = app = Flask(__name__)
 CORS(app)
 api = Api(app)
 

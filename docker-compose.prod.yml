@@ -2,8 +2,9 @@ version: '3.8'
 
 services:
   web:
+    image: sapinspys/github_success_api
     build: 
-      context: ./web
+      context: ./app
       dockerfile: Dockerfile.prod
     command: gunicorn --bind 0.0.0.0:5000 manage:app
     expose:
