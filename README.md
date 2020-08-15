@@ -57,7 +57,7 @@ Returns a list of two dictionaries, the first contains data about the requested 
 ```
 
 ### Top 10 All-Time Contributors
-Returns the top 10 all-time contributors along with their total commits and follower count for the requested repository.
+Returns the top 10 all-time contributors along with their total commits and follower count for the requested repository. Will require `JSON.parse(response)`.
 
 #### Request
 
@@ -74,7 +74,7 @@ Returns the top 10 all-time contributors along with their total commits and foll
 ```
 
 ### Yearly Commit Activity
-Returns total commits made each week for the last 12 months for the requested repository.
+Returns total commits made each week for the last 12 months for the requested repository. Will require `JSON.parse(response)`.
 
 #### Request
 
@@ -89,7 +89,7 @@ Returns total commits made each week for the last 12 months for the requested re
 ```
 
 ### Yearly Code Frequency
-Returns total additions and deletions made each month for the last 12 months for the requested repository.
+Returns total additions and deletions made each month for the last 12 months for the requested repository. Will require `JSON.parse(response)`.
 
 #### Request
 
