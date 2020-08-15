@@ -12,7 +12,7 @@ def abort_if_not_authorized():
     if token:
         return token
     else:
-        abort(404, message="Authorization header missing.")
+        abort(400, message="Authorization header missing.")
 
 
 class Index(Resource):
