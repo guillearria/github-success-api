@@ -1,7 +1,7 @@
 {
     "AWSEBDockerrunVersion": "1",
     "Image": {
-      "Name": "sapinspys/github_success_api:latest",
+      "Name": "sapinspys/gh_success_api:latest",
       "Update": "true"
     },
     "Ports": [
