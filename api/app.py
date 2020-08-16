@@ -7,6 +7,7 @@ application = app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
+
 def abort_if_not_authorized():
     token = request.headers['Authorization']
     if token:
@@ -48,11 +49,23 @@ class YearlyCodeFrequency(Resource):
         return data
 
 
+class DailyCommits(Resource):
+    def get(self, owner, repo):
+        token = abort_if_not_authorized()
+        data = daily_commits(token, f'{owner}/{repo}')
+        return data
+
+
 api.add_resource(Index, '/')
 api.add_resource(RepoSummary, '/repo-summary/<owner>/<repo>')
-api.add_resource(Top10Contributors, '/visualization/top-10-contributors/<owner>/<repo>')
-api.add_resource(YearlyCommitActivity, '/visualization/yearly-commit-activity/<owner>/<repo>')
-api.add_resource(YearlyCodeFrequency, '/visualization/yearly-code-frequency/<owner>/<repo>')
+api.add_resource(Top10Contributors,
+                 '/visualization/top-10-contributors/<owner>/<repo>')
+api.add_resource(YearlyCommitActivity,
+                 '/visualization/yearly-commit-activity/<owner>/<repo>')
+api.add_resource(YearlyCodeFrequency,
+                 '/visualization/yearly-code-frequency/<owner>/<repo>')
+api.add_resource(DailyCommits,
+                 '/visualization/daily-commits/<owner>/<repo>')
 
 
 if __name__ == '__main__':
