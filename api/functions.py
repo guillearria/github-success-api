@@ -58,9 +58,7 @@ def top_contributors(token, full_name):
         'total_commits': [stat.total for stat in stats],
     }
 
-    serialized_data = json.dumps(top_contributors, default=str)
-
-    return serialized_data
+    return top_contributors
 
 
 def yearly_commit_activity(token, full_name):
@@ -143,7 +141,5 @@ def daily_commits(token, full_name):
         'day': df.day.tolist(),
         'commits': df.commits.tolist()
     }
-
-    # serialized_data = json.dumps(daily_commits, default=str)
 
     return daily_commits
