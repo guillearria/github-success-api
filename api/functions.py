@@ -2,6 +2,7 @@ from github import Github
 import pandas as pd
 import json
 
+
 def repository_summary(token, full_name):
     """Returns summary of useful repository and owner data for the given repository.
 
@@ -38,8 +39,9 @@ def repository_summary(token, full_name):
 
     return repository_summary
 
+
 def top_contributors(token, full_name):
-    """Return top 10 all-time contributors for the given repository.
+    """Returns top 10 all-time contributors for the given repository.
 
     Keywork arguments:
     token -- GitHub authorization token
@@ -60,8 +62,9 @@ def top_contributors(token, full_name):
 
     return serialized_data
 
+
 def yearly_commit_activity(token, full_name):
-    """Displays commit activity grouped by week for the last year.
+    """Returns commit activity grouped by week for the last year.
 
     Keywork arguments:
     token -- GitHub authorization token
@@ -72,16 +75,17 @@ def yearly_commit_activity(token, full_name):
     stats = repo.get_stats_commit_activity()
 
     yearly_commit_activity = {
-      'week': [stat.week for stat in stats],
-      'total_commits': [stat.total for stat in stats],
+        'week': [stat.week for stat in stats],
+        'total_commits': [stat.total for stat in stats],
     }
 
     serialized_data = json.dumps(yearly_commit_activity, default=str)
 
     return serialized_data
 
+
 def yearly_code_frequency(token, full_name):
-    """Displays the number of additions and deletions pushed over the last year.
+    """Returns the number of additions and deletions pushed over the last year.
 
     Keywork arguments:
     token -- GitHub authorization token
@@ -109,3 +113,27 @@ def yearly_code_frequency(token, full_name):
     serialized_data = json.dumps(yearly_code_frequency, default=str)
 
     return serialized_data
+
+
+def daily_commits(token, full_name):
+    """Returns daily commits over the last week.
+
+    Keywork arguments:
+    token -- GitHub authorization token
+    full_name -- owner and name of repository in format: "owner/repo"
+    """
+    g = Github(token)
+    repo = g.get_repo(full_name)
+    stats = repo.get_stats_punch_card()
+    stats = stats.raw_data
+
+    d = {0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday', 6:'Saturday'}
+
+    daily_commits = {
+        'day': [d.get(stat[0], stat[0]) for stat in stats],
+        'commits': [stat[2] for stat in stats]
+    }
+
+    # serialized_data = json.dumps(daily_commits, default=str)
+
+    return daily_commits
