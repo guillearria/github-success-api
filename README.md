@@ -58,7 +58,7 @@ Returns a list of two dictionaries, the first contains data about the requested 
 ```
 
 ### Top 10 All-Time Contributors
-Returns the top 10 all-time contributors along with their total commits and follower count for the requested repository. Will require `JSON.parse(response)`.
+Returns the top 10 all-time contributors along with their total commits and follower count for the requested repository.
 
 #### Request
 
@@ -102,5 +102,36 @@ Returns total additions and deletions made each month for the last 12 months for
   "week": ["2020-08-09 00:00:00", "2020-07-26 00:00:00", "2020-06-28 00:00:00", "2020-05-31 00:00:00", "2020-04-26 00:00:00", "2020-03-29 00:00:00", "2020-02-23 00:00:00", "2020-01-26 00:00:00", "2019-12-29 00:00:00", "2019-11-24 00:00:00", "2019-10-27 00:00:00", "2019-09-29 00:00:00"], 
   "additions": [9950, 1652, 7544, 51401, 12142, 34646, 28899, 56881, 8420, 6969, 133671, 16423], 
   "deletions": [-8837, -1547, -4368, -26706, -7554, -22266, -12375, -5500, -5041, -3254, -124854, -12091]
+}
+```
+
+### Daily Commits
+Returns daily commits over the last week for the requested repository.
+
+#### Request
+
+    GET http://githubsuccessapi-env.eba-8utmmuhi.us-east-1.elasticbeanstalk.com/visualization/daily-commits/kubernetes/kubernetes
+
+#### Response
+```json
+{
+  "day": [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ],
+  "commits": [
+    825,
+    3275,
+    3672,
+    3871,
+    3840,
+    3495,
+    1022
+  ]
 }
 ```
