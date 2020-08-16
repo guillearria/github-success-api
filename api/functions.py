@@ -127,11 +127,21 @@ def daily_commits(token, full_name):
     stats = repo.get_stats_punch_card()
     stats = stats.raw_data
 
-    d = {0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday', 6:'Saturday'}
+    daily_commits = {
+        'day': [stat[0] for stat in stats],
+        'commits': [stat[2] for stat in stats]
+    }
+
+    columns = list(daily_commits.keys())
+    df = pd.DataFrame(daily_commits, columns=columns)
+    df = df.groupby(["day"]).sum().reset_index()
+    
+    d = {0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday', 6:'Saturday' } 
+    df = df.replace({"day": d}) 
 
     daily_commits = {
-        'day': [d.get(stat[0], stat[0]) for stat in stats],
-        'commits': [stat[2] for stat in stats]
+        'day': df.day.tolist(),
+        'commits': df.commits.tolist()
     }
 
     # serialized_data = json.dumps(daily_commits, default=str)

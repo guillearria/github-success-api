@@ -17,6 +17,7 @@ Each response will be returned with one of the following HTTP status codes:
 
 ## Development
 * `git clone`
+* `cd api`
 * `pipenv shell`
 * `pipenv install`
 * `python app.py`
