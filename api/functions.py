@@ -59,7 +59,9 @@ def top_contributors(token, full_name):
         'total_commits': [stat.total for stat in stats],
     }
 
-    return top_contributors
+    serialized_data = json.dumps(top_contributors, default=str)
+
+    return serialized_data
 
 
 def yearly_commit_activity(token, full_name):
@@ -143,7 +145,9 @@ def daily_commits(token, full_name):
         'commits': df.commits.tolist()
     }
 
-    return daily_commits
+    serialized_data = json.dumps(daily_commits, default=str)
+
+    return serialized_data
 
 def issue_activity(token, full_name):
     """Returns daily count of opened and closed issues over the last 30 days for the requested repository.
