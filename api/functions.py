@@ -149,12 +149,13 @@ def daily_commits(token, full_name):
 
     return serialized_data
 
-def issue_activity(token, full_name):
-    """Returns daily count of opened and closed issues over the last 30 days for the requested repository.
+def issue_activity(token, full_name, days):
+    """Returns daily count of opened and closed issues over the length of requested days for the requested repository.
 
     Keywork arguments:
     token -- GitHub authorization token
     full_name -- owner and name of repository in format: "owner/repo"
+    days -- int, number of days requested
     """
     g = Github(token)
     repo = g.get_repo(full_name)
@@ -163,7 +164,7 @@ def issue_activity(token, full_name):
     issues_included = []
 
     end_date = datetime.now()
-    start_date = end_date-timedelta(days=30)
+    start_date = end_date-timedelta(days=days)
     delta = end_date - start_date
     
     days_included = [(start_date + timedelta(days=i)).date() for i in range(delta.days)]
