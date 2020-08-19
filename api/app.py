@@ -63,6 +63,13 @@ class IssueActivity(Resource):
         return data
 
 
+class IssueComments(Resource):
+    def get(self, owner, repo):
+        token = abort_if_not_authorized()
+        data = issue_comments(token, f'{owner}/{repo}')
+        return data
+
+
 api.add_resource(Index, '/')
 api.add_resource(RepoSummary, '/repo-summary/<owner>/<repo>')
 api.add_resource(Top10Contributors,
