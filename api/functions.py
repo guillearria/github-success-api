@@ -201,7 +201,7 @@ def issue_activity(token, full_name):
     return serialized_data
 
 def issue_comments(token, full_name):
-    """Returns all issues, their comment count, and body length for the last 7 days.
+    """Returns all issues, their comment count, and body length for the last 7 days for the requested repository.
 
     Keywork arguments:
     token -- GitHub authorization token
