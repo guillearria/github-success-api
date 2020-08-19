@@ -146,7 +146,7 @@ def daily_commits(token, full_name):
     return daily_commits
 
 def issue_activity(token, full_name):
-    """Returns daily count of opened and closed issues for the last 30 days.
+    """Returns daily count of opened and closed issues over the last 30 days for the requested repository.
 
     Keywork arguments:
     token -- GitHub authorization token
@@ -186,11 +186,11 @@ def issue_activity(token, full_name):
     df_closed = df[df.status == "closed"]
 
     issue_activity = {
-        "open": {
+        "open_issues": {
             "created_at": df_open.created_at.tolist(),
             "issue_count": df_open.total_comments.tolist()
         },
-        "closed": {
+        "closed_issues": {
             "created_at": df_closed.created_at.tolist(),
             "issue_count": df_closed.total_comments.tolist()
         }
