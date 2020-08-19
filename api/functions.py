@@ -172,20 +172,20 @@ def issue_activity(token, full_name):
         elif day in days_included:
             issues_included.append(issue)
 
-    issues_data = {
+    data = {
         'created_at': [issue.created_at.date() for issue in issues_included],
         'status': ["closed" if issue.closed_at else "open" for issue in issues_included],
         'total_comments': [issue.comments for issue in issues_included],
     }
 
-    columns = list(issues_data.keys())
-    df = pd.DataFrame(issues_data, columns=columns)
+    columns = list(data.keys())
+    df = pd.DataFrame(data, columns=columns)
     df = df.groupby(["created_at","status"]).count().reset_index()
 
     df_open = df[df.status == "open"]
     df_closed = df[df.status == "closed"]
 
-    issues_data = {
+    issue_activity = {
         "open": {
             "created_at": df_open.created_at.tolist(),
             "issue_count": df_open.total_comments.tolist()
@@ -196,6 +196,43 @@ def issue_activity(token, full_name):
         }
     }
 
-    serialized_data = json.dumps(issues_data, default=str)
+    serialized_data = json.dumps(issue_activity, default=str)
+
+    return serialized_data
+
+def issue_comments(token, full_name):
+    """Returns all issues, their comment count, and body length for the last 7 days.
+
+    Keywork arguments:
+    token -- GitHub authorization token
+    full_name -- owner and name of repository in format: "owner/repo"
+    """
+    g = Github(token)
+    repo = g.get_repo(full_name)
+
+    all_issues = repo.get_issues(state="all")
+    issues_included = []
+
+    end_date = datetime.now()
+    start_date = end_date-timedelta(days=7)
+    delta = end_date - start_date
+    
+    days_included = [(start_date + timedelta(days=i)).date() for i in range(delta.days)]
+    final_day = days_included[0]-timedelta(days=1)
+
+    for issue in all_issues:
+        day = issue.created_at.date()
+        if day == final_day:
+            break
+        elif day in days_included:
+            issues_included.append(issue)
+
+    issue_comments = {
+        'opened_at': [issue.created_at for issue in issues_included],
+        'total_comments': [issue.comments for issue in issues_included],
+        'body_length': [len(issue.body) for issue in issues_included],
+    }
+
+    serialized_data = json.dumps(issue_comments, default=str)
 
     return serialized_data
