@@ -56,6 +56,13 @@ class DailyCommits(Resource):
         return data
 
 
+class IssueActivity(Resource):
+    def get(self, owner, repo):
+        token = abort_if_not_authorized()
+        data = issue_activity(token, f'{owner}/{repo}')
+        return data
+
+
 api.add_resource(Index, '/')
 api.add_resource(RepoSummary, '/repo-summary/<owner>/<repo>')
 api.add_resource(Top10Contributors,
@@ -66,6 +73,10 @@ api.add_resource(YearlyCodeFrequency,
                  '/visualization/yearly-code-frequency/<owner>/<repo>')
 api.add_resource(DailyCommits,
                  '/visualization/daily-commits/<owner>/<repo>')
+api.add_resource(IssueActivity,
+                 '/visualization/issue-activity/<owner>/<repo>')
+api.add_resource(IssueComments,
+                 '/visualization/issue-comments/<owner>/<repo>')
 
 
 if __name__ == '__main__':
