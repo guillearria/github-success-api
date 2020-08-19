@@ -232,7 +232,7 @@ def issue_comments(token, full_name):
             issues_included.append(issue)
 
     issue_comments = {
-        'opened_at': [issue.created_at for issue in issues_included],
+        'created_at': [issue.created_at for issue in issues_included],
         'total_comments': [issue.comments for issue in issues_included],
         'body_length': [len(issue.body) for issue in issues_included],
     }
