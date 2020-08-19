@@ -58,7 +58,7 @@ Returns a list of two dictionaries, the first contains data about the requested 
 ```
 
 ### Top 10 All-Time Contributors
-Returns the top 10 all-time contributors along with their total commits and follower count for the requested repository.
+Returns the top 10 all-time contributors along with their total commits and follower count for the requested repository. Will require `JSON.parse(response)`.
 
 #### Request
 
@@ -106,7 +106,7 @@ Returns total additions and deletions made each month for the last 12 months for
 ```
 
 ### Daily Commits
-Returns daily commits over the last week for the requested repository.
+Returns daily commits over the last week for the requested repository. Will require `JSON.parse(response)`.
 
 #### Request
 
@@ -137,7 +137,7 @@ Returns daily commits over the last week for the requested repository.
 ```
 
 ### Issue Activity
-Returns daily count of opened and closed issues over the last 30 days for the requested repository.
+Returns daily count of opened and closed issues over the last 30 days for the requested repository. Will require `JSON.parse(response)`.
 
 #### Request
 
@@ -158,7 +158,7 @@ Returns daily count of opened and closed issues over the last 30 days for the re
 ```
 
 ### Issue Comments
-Returns all issues, their comment count, and body length for the last 7 days for the requested repository.
+Returns all issues, their comment count, and body length for the last 7 days for the requested repository. Will require `JSON.parse(response)`.
 
 #### Request
 
