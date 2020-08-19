@@ -141,7 +141,7 @@ Returns daily count of opened and closed issues over the last 30 days for the re
 
 #### Request
 
-    GET http://githubsuccessapi-env.eba-8utmmuhi.us-east-1.elasticbeanstalk.com/visualization/issue-activity-30/kubernetes/kubernetes
+    GET http://githubsuccessapi-env.eba-8utmmuhi.us-east-1.elasticbeanstalk.com/visualization/issue-activity/30/kubernetes/kubernetes
 
 #### Response
 ```json
@@ -162,18 +162,18 @@ Returns daily count of opened and closed issues over the last 7 days for the req
 
 #### Request
 
-    GET http://githubsuccessapi-env.eba-8utmmuhi.us-east-1.elasticbeanstalk.com/visualization/issue-activity-7/kubernetes/kubernetes
+    GET http://githubsuccessapi-env.eba-8utmmuhi.us-east-1.elasticbeanstalk.com/visualization/issue-activity/7/kubernetes/kubernetes
 
 #### Response
 ```json
 {
     "open_issues": {
-        "created_at": ["2020-07-19", "2020-07-20", "2020-07-21", "2020-07-22", "2020-07-23", "2020-07-24", "2020-07-25", "2020-07-26", "2020-07-27", "2020-07-28", "2020-07-29", "2020-07-30", "2020-07-31", "2020-08-01", "2020-08-02", "2020-08-03", "2020-08-04", "2020-08-05", "2020-08-06", "2020-08-07", "2020-08-08", "2020-08-09", "2020-08-10", "2020-08-11", "2020-08-12", "2020-08-13", "2020-08-14", "2020-08-15", "2020-08-16", "2020-08-17"], 
-        "issue_count": [8, 16, 20, 26, 13, 17, 4, 2, 15, 12, 15, 21, 12, 7, 3, 12, 22, 23, 15, 27, 9, 7, 20, 25, 26, 17, 21, 9, 6, 22]
+        "created_at": ["2020-08-12", "2020-08-13", "2020-08-14", "2020-08-15", "2020-08-16", "2020-08-17", "2020-08-18"], 
+        "issue_count": [26, 17, 21, 9, 6, 22, 17]
     }, 
     "closed_issues": {
-        "created_at": ["2020-07-19", "2020-07-20", "2020-07-21", "2020-07-22", "2020-07-23", "2020-07-24", "2020-07-25", "2020-07-26", "2020-07-27", "2020-07-28", "2020-07-29", "2020-07-30", "2020-07-31", "2020-08-01", "2020-08-02", "2020-08-03", "2020-08-04", "2020-08-05", "2020-08-06", "2020-08-07", "2020-08-08", "2020-08-09", "2020-08-10", "2020-08-11", "2020-08-12", "2020-08-13", "2020-08-14", "2020-08-15", "2020-08-16", "2020-08-17"], 
-        "issue_count": [15, 18, 21, 31, 21, 20, 5, 4, 18, 16, 17, 21, 16, 7, 2, 14, 14, 16, 12, 10, 10, 10, 10, 14, 18, 15, 13, 4, 1, 4]
+        "created_at": ["2020-08-12", "2020-08-13", "2020-08-14", "2020-08-15", "2020-08-16", "2020-08-17", "2020-08-18"], 
+        "issue_count": [18, 15, 13, 4, 1, 4, 11]
     }
 }
 ```

@@ -164,7 +164,7 @@ def issue_activity(token, full_name, days):
     issues_included = []
 
     end_date = datetime.now()
-    start_date = end_date-timedelta(days=days)
+    start_date = end_date-timedelta(days=int(days))
     delta = end_date - start_date
     
     days_included = [(start_date + timedelta(days=i)).date() for i in range(delta.days)]

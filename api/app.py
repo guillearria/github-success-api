@@ -57,9 +57,9 @@ class DailyCommits(Resource):
 
 
 class IssueActivity(Resource):
-    def get(self, owner, repo):
+    def get(self, owner, repo, days):
         token = abort_if_not_authorized()
-        data = issue_activity(token, f'{owner}/{repo}')
+        data = issue_activity(token, f'{owner}/{repo}', days)
         return data
 
 
@@ -81,7 +81,7 @@ api.add_resource(YearlyCodeFrequency,
 api.add_resource(DailyCommits,
                  '/visualization/daily-commits/<owner>/<repo>')
 api.add_resource(IssueActivity,
-                 '/visualization/issue-activity/<owner>/<repo>')
+                 '/visualization/issue-activity/<days>/<owner>/<repo>')
 api.add_resource(IssueComments,
                  '/visualization/issue-comments/<owner>/<repo>')
 
