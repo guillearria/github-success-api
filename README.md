@@ -1,7 +1,7 @@
 # GitHub Success REST API
 
 ## Overview
-This API serves to provide developers with statistics about specific GitHub repositories. The endpoints below provide data formatted to be used with a visualization library such as Plotly.js.
+This API serves to provide developers with statistics about specific GitHub repositories. The endpoints below provide data formatted to be used with a visualization library such as Plotly.js. Built with Python, Flask, Flask-RESTful, PyGitHub, and Pandas.
 
 ## Authentication
 Each endpoint requires an authorization header for the data to be accessed. This authorization header must include a personal access token (PAT) provided by GitHub.
